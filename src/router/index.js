@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/login.vue'
 import Admin from '../views/admin.vue'
 import Welcome from '../views/admin/welcome.vue'
+import Pwds from '../views/admin/pwds.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
       path: 'welcome',
       name: 'welcome',
       component: Welcome
+    },
+    {
+      path: 'password/list',
+      name: 'password/list',
+      component: Pwds
     }]
   }
 ]
@@ -34,7 +40,7 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes: routes
 })
 
 export default router

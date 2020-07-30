@@ -248,7 +248,7 @@
               </a>
               <ul class="side-nav-second-level" aria-expanded="false">
                 <li>
-                  <a href="_passwords.html">蜜罐工具</a>
+                  <router-link to="/password/list">蜜罐工具</router-link>
                 </li>
                 <li>
                   <a href="javascript:alert('暂未开放')">ToDoList</a>
@@ -598,12 +598,30 @@
           </div>
           <!-- end Help Box -->
           <!-- End Sidebar -->
-
           <div class="clearfix"></div>
           <!-- Sidebar -left -->
 
         </div>
         <!-- Left Sidebar End -->
+        <div class="content-page">
+          <router-view></router-view>
+            <!-- Footer Start -->
+          <footer class="footer">
+            <div class="row">
+              <div class="col-md-6">
+                2018 - 2019 © Hyper - Coderthemes.com
+              </div>
+              <div class="col-md-6">
+                <div class="text-md-right footer-links d-none d-md-block">
+                  <a href="javascript: void(0);">About</a>
+                  <a href="javascript: void(0);">Support</a>
+                  <a href="javascript: void(0);">Contact Us</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+          <!-- end Footer -->
+        </div>
       </div> <!-- end wrapper-->
 
       <!-- ============================================================== -->
