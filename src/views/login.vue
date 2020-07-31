@@ -95,14 +95,14 @@ export default {
   methods: {
     login () {
       const _this = this
-      _this.$http.get('../user/login', {
+      _this.$axios.get(_this.HOST + '/demo/user/login', {
         params: {
           code: _this.username,
           ups: _this.password
         }
-      }).then(function (res) {
+      }).then(res => {
         if (res.data.success) {
-          window.location.href = '_passwords.html'
+          _this.$router.push('/welcome')
         } else {
           alert(res.data.msg)
         }
@@ -111,9 +111,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .input-group-addon {
-    padding: 0;
-  }
-</style>
