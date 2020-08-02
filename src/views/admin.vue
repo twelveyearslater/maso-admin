@@ -148,7 +148,7 @@
                     <img src="/ace/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                   </span>
               <span>
-                    <span class="account-user-name">{{ nick }}</span>
+                    <span class="account-user-name">{{ user.nickname ? user.nickname : user.username }}</span>
                     <span class="account-position">普通用户</span>
                   </span>
             </a>
@@ -231,7 +231,7 @@
           <div class="leftbar-user">
             <a href="#">
               <img src="/ace/assets/images/users/avatar-1.jpg" alt="user-image" height="42" class="rounded-circle shadow-sm">
-              <span class="leftbar-user-name">{{ nick }}</span>
+              <span class="leftbar-user-name">{{ user.nickname ? user.nickname : user.username }}</span>
             </a>
           </div>
 
@@ -742,7 +742,6 @@
                 </p>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -755,6 +754,32 @@
 </template>
 <script>
 export default {
-  name: 'admin'
+  name: 'admin',
+  data () {
+    return {
+      user: {}
+    }
+  },
+  mounted () {
+    const _this = this
+    _this.user = JSON.parse(sessionStorage.getItem('loginUser'))
+  },
+  methods: {
+    logout () {
+      const _this = this
+      _this.$axios.get(_this.HOST + '/demo/user/logout', {
+        params: {
+
+        }
+      }).then(function (res) {
+        if (res.data.success) {
+          sessionStorage.removeItem('loginUser')
+          _this.$router.push('/login')
+        } else {
+          alert('退出失败，请重新退出!')
+        }
+      })
+    }
+  }
 }
 </script>

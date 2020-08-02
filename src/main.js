@@ -3,12 +3,31 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import qs from 'qs'
+import JsEncrypt from 'jsencrypt'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.prototype.$qs = qs
 Vue.prototype.HOST = '/app'
+Vue.prototype.$JsEncrypt = JsEncrypt
+
+// 路由登录拦截
+router.beforeEach((to, from, next) => {
+  // 要不要对meta.loginRequire属性做监控拦截
+  if (to.matched.some(function (item) {
+    return item.meta.loginRequire
+  })) {
+    const loginUser = sessionStorage.getItem('loginUser')
+    if (!loginUser) {
+      next('/login')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 new Vue({
   router,

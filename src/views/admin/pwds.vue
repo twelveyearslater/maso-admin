@@ -93,7 +93,7 @@
                           </div>-->
                         </td>
                         <td>
-                          <img :src="assets/p_images/pwd.iconUrl" alt="contact-img" title="contact-img" class="rounded mr-3" height="48" />
+                          <img :src="'/ace/assets/p_images/' + pwd.iconUrl" alt="contact-img" title="contact-img" class="rounded mr-3" height="48" />
                           <p class="m-0 d-inline-block align-middle font-16">
                             {{ pwd.platformName }}
                             <br/>
@@ -142,7 +142,7 @@
                     <div class="dataTables_paginate paging_simple_numbers" id="products-datatable_paginate">
 
                       <ul class="pagination pagination-rounded">
-                        <li v-for="(pageMark,index) in pageMarks" :class="pageMark.class" :id="pageMark.id" :key="pageMark.id">
+                        <li v-for="(pageMark, index) in pageMarks" :class="pageMark.class" :id="pageMark.id" :key="index">
                           <a href="javascript:;" @click="turnPage(index)" aria-controls="products-datatable" :data-dt-idx="index" tabindex="0" class="page-link" v-html="pageMark.content"></a>
                         </li>
                       </ul>
@@ -156,6 +156,165 @@
       </div> <!-- end col -->
     </div>
     <!-- end row -->
-
   </div> <!-- content -->
 </template>
+
+<script>
+export default {
+  name: 'pwds',
+  data () {
+    return {
+      JsEncrypt: JsEncrypt,
+      pageCount: 5,
+      user: JSON.parse(sessionStorage.getItem('loginUser')),
+      pages: [
+        { id: 5, count: 5 },
+        { id: 10, count: 10 },
+        { id: 20, count: 20 },
+        { id: -1, count: 'ALL' }
+      ],
+      firstCount: 1,
+      totalCount: 0,
+      currentPage: 1,
+      lastCount: 0,
+      pwds: [],
+      pageMarks: [
+        {
+          class: 'paginate_button page-item previous',
+          id: 'products-datatable_previous',
+          content: '<i class="mdi mdi-chevron-left"></i>'
+        },
+        {
+          class: 'paginate_button page-item next',
+          id: 'products-datatable_next',
+          content: '<i class="mdi mdi-chevron-right"></i>'
+        }
+      ]
+    }
+  },
+  mounted () {
+    const _this = this
+    _this.getPwds()
+  },
+  methods: {
+    getPwds () {
+      const _this = this
+      _this.$axios.get(_this.HOST + '/demo/psw/getPageListByUser', {
+        params: {
+          userId: _this.user.id,
+          currentPage: _this.currentPage,
+          pageCount: _this.pageCount
+        }
+      }).then(function (res) {
+        _this.pwds = res.data.data.data // data是vue封装的一层
+        _this.totalCount = res.data.data.totalCount
+        _this.firstCount = res.data.data.firstCount
+        _this.lastCount = res.data.data.lastCount
+        _this.loadPageMark()
+      })
+    },
+    loadPageMark () {
+      const _this = this
+      if (_this.pageMarks.length > 2) {
+        _this.pageMarks.splice(1, _this.pageMarks.length - 2)
+      }
+      if (_this.currentPage === 1) {
+        _this.pageMarks[0].class = 'paginate_button page-item previous disabled'
+      } else {
+        _this.pageMarks[0].class = 'paginate_button page-item previous'
+      }
+      const maxPage = Math.ceil(_this.totalCount / _this.pageCount)
+      if (_this.currentPage === maxPage) {
+        _this.pageMarks[1].class = 'paginate_button page-item next disabled'
+      } else {
+        _this.pageMarks[1].class = 'paginate_button page-item next'
+      }
+      for (var i = 2; i > -3; i--) {
+        if (_this.currentPage + i > 0 && _this.currentPage + i <= maxPage) {
+          _this.pageMarks.splice(1, 0, {
+            class: i === 0 ? 'paginate_button page-item active' : 'paginate_button page-item',
+            id: '',
+            content: _this.currentPage + i
+          })
+        }
+      }
+    },
+    turnPage (index) {
+      const _this = this
+      if (index === 0) {
+        _this.currentPage--
+      } else if (index === _this.pageMarks.length - 1) {
+        _this.currentPage++
+      } else {
+        _this.currentPage = _this.pageMarks[index].content
+      }
+      _this.getPwds()
+    },
+    getModel () {
+      window.open('/ace/用户信息模板.xlsx')
+    },
+    importExcel () {
+      const _this = this
+      _this.dialogChangePwdVisible = true
+      _this.$refs.uploadExcel.click()
+    },
+    parseExcel (e) {
+      const _this = this
+      const files = e.target.files
+      const formData = new FormData()
+      formData.append('file', files[0])
+      formData.append('userId', _this.userId)
+      _this.$axios.post(_this.HOST + 'demo/psw/import', formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      ).then((res) => {
+        if (res.data.success) {
+          alert(res.data.msg)
+          _this.getPwd()
+        } else {
+          alert(res.data.msg + '不符合模板要求！')
+        }
+      })
+    },
+    exportExcel () {
+      const _this = this
+      window.open('../psw/download?userId=' + _this.userId)
+      _this.$axios.get(_this.HOST + 'demo/psw/download', {
+        responseType: 'blob',
+        params: {
+          userId: _this.userId
+        }
+      })
+    },
+    deletePwd (index) {
+      const _this = this
+      _this.$axios.get(_this.HOST + 'demo/psw/remove', {
+        params: {
+          id: _this.pwds[index].id
+        }
+      }).then(function (res) {
+        if (res.data.success) {
+          alert('操作完成！')
+          _this.getPwds()
+        } else {
+          alert('操作失败，请重新尝试！')
+        }
+      })
+    },
+    copyText (index) {
+      const _this = this
+      const pass = _this.decodeA(_this.pwds[index].password)
+      alert('请手动复制[密码]：' + pass)
+    },
+    decodeA (pass) {
+      const _this = this
+      _this.$JsEncrypt.setPrivateKey('-----BEGIN RSA PRIVATE KEY-----' + _this.code + '-----END RSA PRIVATE KEY-----')
+      pass = _this.$JsEncrypt.decrypt(pass)
+      return pass
+    }
+  }
+}
+</script>

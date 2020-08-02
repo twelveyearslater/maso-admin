@@ -102,6 +102,7 @@ export default {
         }
       }).then(res => {
         if (res.data.success) {
+          sessionStorage.setItem('loginUser', JSON.stringify(res.data.data))
           _this.$router.push('/welcome')
         } else {
           alert(res.data.msg)
