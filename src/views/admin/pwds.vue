@@ -164,7 +164,8 @@ export default {
   name: 'pwds',
   data () {
     return {
-      JsEncrypt: JsEncrypt,
+      /* eslint-disable */
+      encryptObj : new JSEncrypt(),
       pageCount: 5,
       user: JSON.parse(sessionStorage.getItem('loginUser')),
       pages: [
@@ -311,8 +312,8 @@ export default {
     },
     decodeA (pass) {
       const _this = this
-      _this.$JsEncrypt.setPrivateKey('-----BEGIN RSA PRIVATE KEY-----' + _this.code + '-----END RSA PRIVATE KEY-----')
-      pass = _this.$JsEncrypt.decrypt(pass)
+      _this.encryptObj.setPrivateKey('-----BEGIN RSA PRIVATE KEY-----' + _this.user.decodeQueue + '-----END RSA PRIVATE KEY-----')
+      pass = _this.encryptObj.decrypt(pass)
       return pass
     }
   }

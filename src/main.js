@@ -3,14 +3,12 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import qs from 'qs'
-import JsEncrypt from 'jsencrypt'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.prototype.$qs = qs
 Vue.prototype.HOST = '/app'
-Vue.prototype.$JsEncrypt = JsEncrypt
 
 // 路由登录拦截
 router.beforeEach((to, from, next) => {

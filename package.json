@@ -10,7 +10,6 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
-    "jsencrypt": "^3.0.0-rc.1",
     "qs": "^6.9.4",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0"
