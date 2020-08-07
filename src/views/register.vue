@@ -4,7 +4,7 @@
       <!--Auth fluid left content -->
       <div class="auth-fluid-form-box">
         <div class="align-items-center d-flex h-100">
-          <div class="card-body" id="login">
+          <div class="card-body">
 
             <!-- Logo -->
             <div class="auth-brand text-center text-lg-left">
@@ -14,31 +14,39 @@
             </div>
 
             <!-- title-->
-            <h4 class="mt-0">登陆</h4>
-            <p class="text-muted mb-4">请输入您的账号和密码.</p>
-
-            <!-- form -->
+            <h4 class="mt-0">免费注册</h4>
+            <p class="text-muted mb-4">还没有账号? 快来创建一个吧！</p>
+            <div id="create">
               <div class="form-group">
-                <label for="emailaddress">账号</label>
-                <input class="form-control" type="text" id="emailaddress" required="" placeholder="你的账号/手机号/邮箱" v-model="username">
+                <label for="fullname">用户名</label>
+                <input class="form-control" type="text" id="fullname" v-model="username" placeholder="请输入用户名" required>
               </div>
               <div class="form-group">
-                <a href="pages-recoverpw-2.html" class="text-muted float-right"><small>忘记密码？</small></a>
+                <label for="emailaddress">邮箱</label>
+                <input class="form-control" type="email" id="emailaddress" v-model="email" required placeholder="请输入邮箱">
+              </div>
+              <div class="form-group">
                 <label for="password">密码</label>
-                <input class="form-control" type="password" required="" id="password" placeholder="请输入密码" v-model="password">
+                <input class="form-control" type="password" required id="password" v-model="password" placeholder="请输入密码">
               </div>
-              <div class="form-group mb-3">
+              <div class="form-group">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="checkbox-signin">
-                  <label class="custom-control-label" for="checkbox-signin">记住我 <small> (不是自己的电脑上不要勾选此项)</small></label>
+                  <input type="checkbox" class="custom-control-input" v-model="isAdminMyself" id="checkbox-signup1">
+                  <label class="custom-control-label" for="checkbox-signup1">解密方式： <a href="javascript: confirm('如果丢失秘钥，平台将无法解读用户存储的信息');" class="text-muted">由个人存储秘钥</a></label>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" v-model="isAgree" id="checkbox-signup2">
+                  <label class="custom-control-label" for="checkbox-signup2">我已同意 <a href="javascript: void(0);" class="text-muted">《卜M平台用户使用协议》</a></label>
                 </div>
               </div>
               <div class="form-group mb-0 text-center">
-                <button class="btn btn-primary btn-block" @click="login"><i class="mdi mdi-login"></i> 登录 </button>
+                <button class="btn btn-primary btn-block" type="submit" @click="signUp"><i class="mdi mdi-account-circle"></i> 注 册 </button>
               </div>
               <!-- social-->
               <div class="text-center mt-4">
-                <p class="text-muted font-16">关联登录</p>
+                <p class="text-muted font-16">关联注册</p>
                 <ul class="social-list list-inline mt-3">
                   <li class="list-inline-item">
                     <a href="javascript: alert('很抱歉，暂未开启');" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
@@ -54,11 +62,10 @@
                   </li>
                 </ul>
               </div>
-            <!-- end form-->
-
+            </div>
             <!-- Footer-->
             <footer class="footer footer-alt">
-              <p class="text-muted">还没有账号? <router-link to="/register" class="text-muted ml-1"><b>注册</b></router-link></p>
+              <p class="text-muted">已有账号，直接登陆? <a href="_login.html" class="text-muted ml-1"><b>登陆</b></a></p>
             </footer>
 
           </div> <!-- end .card-body -->
@@ -82,30 +89,44 @@
     <!-- end auth-fluid-->
   </div>
 </template>
-
 <script>
 export default {
-  name: 'login',
+  name: '',
   data () {
     return {
       username: '',
-      password: ''
+      email: '',
+      password: '',
+      isAdminMyself: '',
+      isAgree: ''
     }
   },
   methods: {
-    login () {
+    signUp () {
       const _this = this
-      _this.$axios.get(_this.HOST + '/demo/user/login', {
+      if (!_this.isAgree) {
+        alert('请查看相关协议或条款，并同意。')
+        return
+      }
+      if (_this.isAdminMyself) {
+        alert('平台暂不支持由个人保存秘钥！')
+        return
+      }
+      const user = {}
+      user.username = _this.username
+      user.email = _this.email
+      user.password = _this.password
+      _this.$axios.get(_this.HOST + '/demo/user/signUp', {
         params: {
-          code: _this.username,
-          ups: _this.password
+          user: JSON.stringify(user)
         }
-      }).then(res => {
+      }).then(function (res) {
         if (res.data.success) {
-          sessionStorage.setItem('loginUser', JSON.stringify(res.data.data))
-          _this.$router.push('/welcome')
+          alert('注册成功，请登录')
+          _this.$router.push('/login')
         } else {
-          alert(res.data.msg)
+          alert('注册失败！')
+          _this.$router.push('/register')
         }
       })
     }

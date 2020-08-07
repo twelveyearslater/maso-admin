@@ -23,7 +23,9 @@
           <div class="card-body">
             <div class="row mb-2">
               <div class="col-sm-4">
-                <a href="_save-pwd.html;" class="btn btn-danger mb-2"><i class="mdi mdi-account-plus mr-2"></i>添加 </a>
+                <router-link to='/password/add' class="btn btn-danger mb-2">
+                  <i class="mdi mdi-account-plus mr-2"></i>添加
+                </router-link>
               </div>
               <div class="col-sm-8">
                 <div class="text-sm-right">
@@ -166,6 +168,7 @@ export default {
     return {
       /* eslint-disable */
       encryptObj : new JSEncrypt(),
+      /* eslint-enable */
       pageCount: 5,
       user: JSON.parse(sessionStorage.getItem('loginUser')),
       pages: [
@@ -289,6 +292,11 @@ export default {
           userId: _this.userId
         }
       })
+    },
+    modify (index) {
+      const _this = this
+      const pid = _this.pwds[index].id
+      _this.$router.push({ path: '/password/modify', query: { pid: pid } })
     },
     deletePwd (index) {
       const _this = this
