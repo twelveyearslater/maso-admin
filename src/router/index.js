@@ -8,6 +8,7 @@ import ModifyPwd from '../views/admin/modifyPwd.vue'
 import AddPwd from '../views/admin/addPwd'
 import Register from '../views/register.vue'
 import Profile from '../views/admin/profile.vue'
+import Building from '../views/building.vue'
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,36 @@ const routes = [
       path: 'user/profile',
       name: 'user/profile',
       component: Profile
+    },
+    {
+      path: 'todo/list',
+      name: 'todo/list',
+      component: Building
+    },
+    {
+      path: 'habit/list',
+      name: 'habit/list',
+      component: Building
+    },
+    {
+      path: 'admin/user',
+      name: 'admin/user',
+      component: Building
+    },
+    {
+      path: 'admin/data',
+      name: 'admin/data',
+      component: Building
+    },
+    {
+      path: 'admin/log',
+      name: 'admin/log',
+      component: Building
+    },
+    {
+      path: 'site/owner',
+      name: 'site/owner',
+      component: Building
     }]
   }
 ]

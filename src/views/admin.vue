@@ -237,24 +237,16 @@
 
           <!--- Sidemenu -->
           <ul class="metismenu side-nav">
-
             <li class="side-nav-title side-nav-item">『 功能菜单 』</li>
-
-            <li class="side-nav-item">
+            <li v-for="(menu) in menus" :key="menu.id" class="side-nav-item">
               <a href="javascript: void(0);" class="side-nav-link">
-                <i class="dripicons-meter"></i>
-                <span class="badge badge-success float-right">3</span>
-                <span> 常用工具 </span>
+              <i class="dripicons-meter"></i>
+              <span class="badge badge-success float-right">3</span>
+              <span> {{ menu.name }} </span>
               </a>
               <ul class="side-nav-second-level" aria-expanded="false">
-                <li>
-                  <router-link to="/password/list">蜜罐工具</router-link>
-                </li>
-                <li>
-                  <a href="javascript:alert('暂未开放')">ToDoList</a>
-                </li>
-                <li>
-                  <router-link to="/user/profile">个人简介</router-link>
+                <li v-for="(son) in menu.sons" :key="son.id">
+                  <router-link :to=son.url> {{ son.name }} </router-link>
                 </li>
               </ul>
             </li>
@@ -431,12 +423,16 @@ export default {
   name: 'admin',
   data () {
     return {
-      user: {}
+      user: {},
+      menus: []
     }
   },
   mounted () {
     const _this = this
     _this.user = JSON.parse(sessionStorage.getItem('loginUser'))
+    _this.getMenus((arr) => {
+      _this.handleMenu(arr)
+    })
   },
   methods: {
     logout () {
@@ -453,6 +449,37 @@ export default {
           alert('退出失败，请重新退出!')
         }
       })
+    },
+    getMenus (callback) {
+      const _this = this
+      _this.$axios.get(_this.HOST + '/demo/menu/getCommon', {
+        params: {
+
+        }
+      }).then(function (res) {
+        if (res.data.success) {
+          callback(res.data.data)
+        } else {
+          alert(res.data.msg)
+          return []
+        }
+      })
+    },
+    handleMenu (menuArr) {
+      const _this = this
+      for (const menu of menuArr) {
+        if (menu.level === 1) {
+          menu.sons = []
+          _this.menus.push(menu)
+        } else {
+          for (const up of _this.menus) {
+            if (up.id === menu.upId) {
+              up.sons.push(menu)
+            }
+          }
+        }
+      }
+      console.log(_this.menus)
     }
   }
 }
