@@ -19,28 +19,28 @@
 
           <li class="dropdown notification-list topbar-dropdown d-none d-lg-block">
             <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" id="topbar-languagedrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              <img src="/ace/assets/images/flags/us.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">English</span> <i class="mdi mdi-chevron-down"></i>
+              <img src="/ace/assets/images/flags/china.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">中文</span> <i class="mdi mdi-chevron-down"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu" aria-labelledby="topbar-languagedrop">
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
-                <img src="/ace/assets/images/flags/germany.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">German</span>
+              <a href="javascript:alert('平台还未支持该语言');" class="dropdown-item notify-item">
+                <img src="/ace/assets/images/flags/germany.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">德文</span>
               </a>
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
-                <img src="/ace/assets/images/flags/italy.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Italian</span>
+              <a href="javascript:alert('平台还未支持该语言');" class="dropdown-item notify-item">
+                <img src="/ace/assets/images/flags/us.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">英文</span>
               </a>
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
-                <img src="/ace/assets/images/flags/spain.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Spanish</span>
+              <a href="javascript:alert('平台还未支持该语言');" class="dropdown-item notify-item">
+                <img src="/ace/assets/images/flags/spain.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">西班牙文</span>
               </a>
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
-                <img src="/ace/assets/images/flags/russia.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Russian</span>
+              <a href="javascript:alert('平台还未支持该语言');" class="dropdown-item notify-item">
+                <img src="/ace/assets/images/flags/russia.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">俄文</span>
               </a>
 
             </div>
@@ -145,7 +145,7 @@
             <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
               aria-expanded="false">
                   <span class="account-user-avatar">
-                    <img src="/ace/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                    <img src="/ace/assets/images/users/avatar-default-man.png" alt="user-image" class="rounded-circle">
                   </span>
               <span>
                     <span class="account-user-name">{{ user.nickname ? user.nickname : user.username }}</span>
@@ -155,36 +155,36 @@
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
               <!-- item-->
               <div class=" dropdown-header noti-title">
-                <h6 class="text-overflow m-0">Welcome !</h6>
+                <h6 class="text-overflow m-0">您好，{{ user.nickname }} !</h6>
               </div>
 
               <!-- item-->
               <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <i class="mdi mdi-account-circle mr-1"></i>
-                <span>My Account</span>
+                <span>我的账户</span>
               </a>
 
               <!-- item-->
               <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <i class="mdi mdi-account-edit mr-1"></i>
-                <span>Settings</span>
+                <span>设置</span>
               </a>
 
               <!-- item-->
               <a href="javascript:void(0);" class="dropdown-item notify-item">
-                <i class="mdi mdi-lifebuoy mr-1"></i>
-                <span>Support</span>
+                <i class="mdi mdi-account-supervisor mr-1"></i>
+                <span>支持</span>
               </a>
 
               <!-- item-->
               <a href="javascript:void(0);" class="dropdown-item notify-item">
-                <i class="mdi mdi-lock-outline mr-1"></i>
-                <span>Lock Screen</span>
+                <i class="mdi mdi-account-clock-outline mr-1"></i>
+                <span>锁屏</span>
               </a>
 
               <!-- item-->
               <a href="javascript:void(0);" class="dropdown-item notify-item" @click="logout">
-                <i class="mdi mdi-logout mr-1"></i>
+                <i class="mdi mdi-account-off mr-1"></i>
                 <span>退出</span>
               </a>
 
@@ -199,17 +199,17 @@
             <span></span>
           </div>
         </a>
-        <div class="app-search">
+        <!--<div class="app-search">
           <form>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search...">
+              <input type="text" class="form-control" placeholder="查询...">
               <span class="mdi mdi-magnify"></span>
               <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">查询</button>
               </div>
             </div>
           </form>
-        </div>
+        </div>-->
       </div>
     </div>
 
@@ -226,20 +226,20 @@
         <!-- Start Content-->
 
         <!-- ========== Left Sidebar Start ========== -->
-        <div class="left-side-menu">
+        <div class="left-side-menu action">
 
           <div class="leftbar-user">
             <a href="#">
-              <img src="/ace/assets/images/users/avatar-1.jpg" alt="user-image" height="42" class="rounded-circle shadow-sm">
+              <img src="/ace/assets/images/users/avatar-default-man.png" alt="user-image" height="42" class="rounded-circle shadow-sm">
               <span class="leftbar-user-name">{{ user.nickname ? user.nickname : user.username }}</span>
             </a>
           </div>
 
           <!--- Sidemenu -->
-          <ul class="metismenu side-nav">
+          <ul class="metismenu side-nav in">
             <li class="side-nav-title side-nav-item">『 功能菜单 』</li>
-            <li v-for="(menu) in menus" :key="menu.id" class="side-nav-item">
-              <a href="javascript: void(0);" class="side-nav-link">
+            <li v-for="(menu) in menus" :key="menu.id" class="side-nav-item action">
+              <a href="javascript: void(0);" class="side-nav-link action">
               <i class="dripicons-meter"></i>
               <span class="badge badge-success float-right">3</span>
               <span> {{ menu.name }} </span>
@@ -434,6 +434,13 @@ export default {
       _this.handleMenu(arr)
     })
   },
+  // mounted () {
+  //   const _this = this
+  //   _this.user = JSON.parse(sessionStorage.getItem('loginUser'))
+  //   _this.getMenus((arr) => {
+  //     _this.handleMenu(arr)
+  //   })
+  // },
   methods: {
     logout () {
       const _this = this
@@ -461,7 +468,6 @@ export default {
           callback(res.data.data)
         } else {
           alert(res.data.msg)
-          return []
         }
       })
     },

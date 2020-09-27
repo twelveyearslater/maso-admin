@@ -9,6 +9,7 @@ import AddPwd from '../views/admin/addPwd'
 import Register from '../views/register.vue'
 import Profile from '../views/admin/profile.vue'
 import Building from '../views/building.vue'
+import User from '../views/admin/user.vue'
 
 Vue.use(VueRouter)
 
@@ -74,7 +75,7 @@ const routes = [
     {
       path: 'admin/user',
       name: 'admin/user',
-      component: Building
+      component: User
     },
     {
       path: 'admin/data',
@@ -89,6 +90,11 @@ const routes = [
     {
       path: 'site/owner',
       name: 'site/owner',
+      component: Profile
+    },
+    {
+      path: 'site/profile',
+      name: 'site/profile',
       component: Building
     }]
   }
