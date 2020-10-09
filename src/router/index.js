@@ -10,6 +10,7 @@ import Register from '../views/register.vue'
 import Profile from '../views/admin/profile.vue'
 import Building from '../views/building.vue'
 import User from '../views/admin/user.vue'
+import Lock from '../views/lock.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,10 @@ const routes = [
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/lock',
+    component: Lock
   },
   {
     path: '/register',

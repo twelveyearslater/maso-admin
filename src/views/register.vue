@@ -41,8 +41,11 @@
                   <label class="custom-control-label" for="checkbox-signup2">我已同意 <a href="javascript: void(0);" class="text-muted">《卜M平台用户使用协议》</a></label>
                 </div>
               </div>
-              <div class="form-group mb-0 text-center">
+              <div class="form-group mb-0 text-center" v-show="showButton">
                 <button class="btn btn-primary btn-block" type="submit" @click="signUp"><i class="mdi mdi-account-circle"></i> 注 册 </button>
+              </div>
+              <div class="form-group mb-0 text-center" v-show="!showButton">
+                <button class="btn btn-primary btn-block" type="submit" @click="sendActiveMail"><i class="mdi mdi-account-circle"></i> 邮件激活 </button>
               </div>
               <!-- social-->
               <div class="text-center mt-4">
@@ -98,7 +101,8 @@ export default {
       email: '',
       password: '',
       isAdminMyself: '',
-      isAgree: ''
+      isAgree: '',
+      showButton: true
     }
   },
   methods: {
@@ -122,14 +126,22 @@ export default {
         }
       }).then(function (res) {
         if (res.data.success) {
-          alert('注册成功，请登录')
-          _this.$router.push('/login')
+          alert('注册成功，请收取邮件并激活账户')
         } else {
-          alert('注册失败！')
-          _this.$router.push('/register')
+          const msg = res.data.msg
+          if (res.data.data === 0) {
+            alert('注册失败！' + msg)
+            _this.$router.push('/register')
+          } else if (res.data.data === 2) {
+            alert('注册失败！' + msg)
+            _this.showButton = !_this.showButton
+          }
         }
       })
     }
   }
 }
 </script>
+<style>
+
+</style>

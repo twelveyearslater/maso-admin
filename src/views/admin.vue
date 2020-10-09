@@ -177,7 +177,7 @@
               </a>
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <a href="javascript:void(0);" class="dropdown-item notify-item" @click="lock">
                 <i class="mdi mdi-account-clock-outline mr-1"></i>
                 <span>锁屏</span>
               </a>
@@ -275,13 +275,13 @@
           <footer class="footer">
             <div class="row">
               <div class="col-md-6">
-                2018 - 2019 © Hyper - Coderthemes.com
+                2019 - 2020 © Hyper - masochism.top
               </div>
               <div class="col-md-6">
                 <div class="text-md-right footer-links d-none d-md-block">
-                  <a href="javascript: void(0);">About</a>
-                  <a href="javascript: void(0);">Support</a>
-                  <a href="javascript: void(0);">Contact Us</a>
+                  <a href="javascript: void(0);">关于</a>
+                  <a href="javascript: void(0);">支持</a>
+                  <a href="javascript: void(0);">联系我们</a>
                 </div>
               </div>
             </div>
@@ -486,6 +486,11 @@ export default {
         }
       }
       console.log(_this.menus)
+    },
+    lock () {
+      const _this = this
+      sessionStorage.setItem('isLock', '1')
+      _this.$router.push('/lock')
     }
   }
 }

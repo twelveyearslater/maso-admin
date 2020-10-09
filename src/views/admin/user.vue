@@ -101,7 +101,7 @@
             <hr/>
 
             <div class="text-left">
-              <p class="text-muted"><strong>实名认证 :</strong> <span class="ml-2">Michael A. Franklin</span></p>
+              <p class="text-muted"><strong>实名认证 :</strong> <span class="ml-2">安* （130***********0914）</span></p>
 
               <p class="text-muted"><strong>绑定手机号 :</strong><span class="ml-2">(+86) 123 1234 5678</span></p>
 
