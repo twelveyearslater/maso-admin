@@ -184,7 +184,7 @@ export default {
     save () {
       const _this = this
       const pwdMsg = {}
-      pwdMsg.userId = _this.userId
+      pwdMsg.userId = _this.user.id
       pwdMsg.id = _this.getPasswordId()
       pwdMsg.username = _this.username
       pwdMsg.password = _this.encodeA(_this.password)
