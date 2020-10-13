@@ -210,6 +210,7 @@ export default {
           pageCount: _this.pageCount
         }
       }).then(function (res) {
+        _this.checkOnline(res.data)
         _this.pwds = res.data.data.data // data是vue封装的一层
         _this.totalCount = res.data.data.totalCount
         _this.firstCount = res.data.data.firstCount

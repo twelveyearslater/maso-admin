@@ -3,12 +3,15 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import qs from 'qs'
+import common from './assets/common.js'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
+axios.defaults.withCredentials = true
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.prototype.$qs = qs
-Vue.prototype.HOST = '/app'
+Vue.prototype.HOST = '/demo'
+Vue.use(common)
 
 // 路由登录拦截
 router.beforeEach((to, from, next) => {
