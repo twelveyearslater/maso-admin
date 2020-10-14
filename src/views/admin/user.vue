@@ -90,86 +90,36 @@
                 </div>
               </div>
 
-              <p class="text-muted" v-show="!isEdit"><strong>性别 :</strong> <span class="ml-2"> 不明 </span></p>
+              <p class="text-muted" v-show="!isEdit"><strong>性别 :</strong> <span class="ml-2"> {{ gender }} </span></p>
               <div class="form-group row mb-3" v-show="isEdit">
                 <label class="col-md-2 col-form-label">性别 :</label>
-                <div class="col-md-10">
-                  <select id="inputState" class="form-control">
-                    <option>不明</option>
-                    <option>男</option>
-                    <option>女</option>
-                  </select>
+                <div class="col-md-10  row mb-0">
+                  <div class="col-md-4">
+                    <select id="inputState" class="form-control" v-model="selectedGender">
+                      <option>不明</option>
+                      <option>男</option>
+                      <option>女</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               <p class="text-muted" v-show="!isEdit"><strong>生日 :</strong><span class="ml-2"> 2000-11-11 </span></p>
               <div class="form-group row mb-3" v-show="isEdit">
                 <label class="col-md-2 col-form-label">生日 :</label>
-                <div class="col-md-4">
-                  <select id="inputState1" class="form-control">
-                    <option>1994</option>
-                    <option>1995</option>
-                    <option>1996</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <select id="inputState2" class="form-control">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <select id="inputState3" class="form-control">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                  </select>
-                </div>
+                <DateSelect v-model="birthday"></DateSelect>
               </div>
 
               <p class="text-muted" v-show="!isEdit"><strong>所在地 :</strong> <span class="ml-2"> 中国 - 北京 </span></p>
               <div class="form-group row mb-3" v-show="isEdit">
                 <label class="col-md-2 col-form-label">所在地 :</label>
-                <div class="col-md-4">
-                  <select id="region1" class="form-control">
-                    <option>北京市</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <select id="region2" class="form-control">
-                    <option>北京市</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <select id="region3" class="form-control">
-                    <option>朝阳区</option>
-                    <option>东城区</option>
-                    <option>西城区</option>
-                  </select>
-                </div>
+                <RegionSelect v-model="liveIn"></RegionSelect>
               </div>
 
               <p class="text-muted mb-0" v-show="!isEdit"><strong>家乡 :</strong><span class="ml-2"> 中国 - 河北 - 石家庄 </span></p>
               <div class="form-group row mb-0" v-show="isEdit">
                 <label class="col-md-2 col-form-label">家乡 :</label>
-                <div class="col-md-4">
-                  <select id="county1" class="form-control">
-                    <option>北京市</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <select id="county2" class="form-control">
-                    <option>北京市</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <select id="county3" class="form-control">
-                    <option>朝阳区</option>
-                    <option>东城区</option>
-                    <option>西城区</option>
-                  </select>
-                </div>
+                <RegionSelect v-model="hometown"></RegionSelect>
               </div>
 
             </div>
@@ -191,7 +141,7 @@
             <hr/>
 
             <div class="text-left">
-              <p class="text-muted" v-show="!isEdit"><strong>实名认证 :</strong> <span class="ml-2">安* （130***********0914）</span></p>
+              <p class="text-muted" v-show="!isEdit"><strong>实名认证 :</strong> <span class="ml-2">{{ user.realName }} （{{ idCardEncode === '' ? '未认证' : idCardEncode }}）</span></p>
               <div class="form-group row mb-3" v-show="isEdit">
                 <label class="col-md-2 col-form-label">实名认证 :</label>
                 <div class="col-md-10">
@@ -199,7 +149,7 @@
                 </div>
               </div>
 
-              <p class="text-muted" v-show="!isEdit"><strong>绑定手机号 :</strong><span class="ml-2">(+86) 123 1234 5678</span></p>
+              <p class="text-muted" v-show="!isEdit"><strong>绑定手机号 :</strong><span class="ml-2">{{ phoneEncode === '' ? '未绑定' : phoneEncode }}</span></p>
               <div class="form-group row mb-3" v-show="isEdit">
                 <label class="col-md-2 col-form-label">绑定手机号 :</label>
                 <div class="col-md-10">
@@ -207,7 +157,7 @@
                 </div>
               </div>
 
-              <p class="text-muted" v-show="!isEdit"><strong>绑定邮箱 :</strong> <span class="ml-2">aaaaa347852901@qq.com</span></p>
+              <p class="text-muted" v-show="!isEdit"><strong>绑定邮箱 :</strong> <span class="ml-2">{{ user.email == undefined || user.email === '' ? '未绑定' : user.email }}</span></p>
               <div class="form-group row mb-3" v-show="isEdit">
                 <label class="col-md-2 col-form-label">绑定邮箱 :</label>
                 <div class="col-md-10">
@@ -215,7 +165,7 @@
                 </div>
               </div>
 
-              <p class="text-muted" v-show="!isEdit"><strong>绑定微信号 :</strong> <span class="ml-2">T-mac_347852901</span></p>
+              <p class="text-muted" v-show="!isEdit"><strong>绑定微信号 :</strong> <span class="ml-2">{{ user.weChatId == undefined || user.weChatId === '' ? '未绑定' : user.weChatId }}</span></p>
               <div class="form-group row mb-3" v-show="isEdit">
                 <label class="col-md-2 col-form-label">绑定微信号 :</label>
                 <div class="col-md-10">
@@ -224,7 +174,7 @@
               </div>
 
               <p class="text-muted" v-show="!isEdit"><strong>绑定微博 :</strong>
-                <span class="ml-2"> 暂无 </span>
+                <span class="ml-2"> {{ user.sina == undefined || user.sina === '' ? '未绑定' : user.sina}} </span>
               </p>
               <div class="form-group row mb-0" v-show="isEdit">
                 <label class="col-md-2 col-form-label">绑定微博 :</label>
@@ -246,18 +196,56 @@
   </div> <!-- content -->
 </template>
 <script>
+import RegionSelect from '../../components/RegionSelect.vue'
+import DateSelect from '../../components/DateSelect.vue'
 export default {
   name: 'user',
   data () {
     return {
       user: JSON.parse(sessionStorage.getItem('loginUser')),
-      isEdit: false
+      isEdit: false,
+      birthday: '',
+      liveIn: '',
+      hometown: '',
+      idCardEncode: '',
+      phoneEncode: '',
+      gender: '不明',
+      selectedGender: 2
+    }
+  },
+  components: {
+    RegionSelect,
+    DateSelect
+  },
+  created () {
+    const _this = this
+    const idCard = _this.user.idCard
+    const phone = _this.user.phone
+    const genderNum = _this.user.gender
+    if (idCard !== '') {
+      _this.idCardEncode = idCard.substring(0, 3) + '***********' + idCard.substring(14)
+    }
+    if (phone !== '') {
+      _this.phoneEncode = phone.substring(0, 3) + '****' + phone.substring(7)
+    }
+    if (genderNum !== '') {
+      switch (genderNum) {
+        case 0:
+          _this.gender = '女'
+          break
+        case 1:
+          _this.gender = '男'
+          break
+        default:
+          _this.gender = '不明'
+      }
     }
   },
   methods: {
     edit () {
       const _this = this
       _this.isEdit = !_this.isEdit
+      _this.selectedGender = _this.gender
     },
     save () {
       const _this = this
