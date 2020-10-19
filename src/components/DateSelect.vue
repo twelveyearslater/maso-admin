@@ -40,20 +40,32 @@ export default {
       days: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
       selectedYear: 1900,
       selectedMonth: 1,
-      selectedDay: 1
+      selectedDay: 1,
+      birthday: ''
     }
   },
+  props: ['date'],
   created () {
     const _this = this
     const currentYear = new Date().getFullYear()
     for (let i = 1900; i < currentYear - 3; i++) {
       _this.years.push(i)
     }
-    Vue.nextTick(() => {
-      _this.selectedYear = 1900
-      _this.selectedMonth = 1
-      _this.selectedDay = 1
-    })
+    _this.birthday = _this.date
+    if (_this.birthday === undefined || _this.birthday === '') {
+      Vue.nextTick(() => {
+        _this.selectedYear = 1900
+        _this.selectedMonth = 1
+        _this.selectedDay = 1
+      })
+    } else {
+      const dateArr = _this.birthday.split('-')
+      Vue.nextTick(() => {
+        _this.selectedYear = dateArr[0]
+        _this.selectedMonth = parseInt(dateArr[1])
+        _this.selectedDay = parseInt(dateArr[2])
+      })
+    }
   },
   watch: {
     selectedYear () {
@@ -70,7 +82,7 @@ export default {
         return
       } else {
         const newDays = _this.getDays(_this.selectedYear, newVal)
-        const oldDays = _this.getDays(_this.selectedYear, oldVal)
+        const oldDays = _this.days.length
         diff = newDays - oldDays
       }
       if (diff === 0) return

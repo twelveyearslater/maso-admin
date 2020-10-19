@@ -104,10 +104,10 @@
                 </div>
               </div>
 
-              <p class="text-muted" v-show="!isEdit"><strong>生日 :</strong><span class="ml-2"> 2000-11-11 </span></p>
+              <p class="text-muted" v-show="!isEdit"><strong>生日 :</strong><span class="ml-2"> {{ birthday }} </span></p>
               <div class="form-group row mb-3" v-show="isEdit">
                 <label class="col-md-2 col-form-label">生日 :</label>
-                <DateSelect v-model="birthday"></DateSelect>
+                <DateSelect v-model="birthday" :date="birthday"></DateSelect>
               </div>
 
               <p class="text-muted" v-show="!isEdit"><strong>所在地 :</strong> <span class="ml-2"> 中国 - 北京 </span></p>
@@ -204,7 +204,7 @@ export default {
     return {
       user: JSON.parse(sessionStorage.getItem('loginUser')),
       isEdit: false,
-      birthday: '',
+      birthday: '2000-11-11',
       liveIn: '',
       hometown: '',
       idCardEncode: '',
@@ -222,6 +222,7 @@ export default {
     const idCard = _this.user.idCard
     const phone = _this.user.phone
     const genderNum = _this.user.gender
+    const birth = this.user.birthday
     if (idCard !== '') {
       _this.idCardEncode = idCard.substring(0, 3) + '***********' + idCard.substring(14)
     }
@@ -239,6 +240,9 @@ export default {
         default:
           _this.gender = '不明'
       }
+    }
+    if (birth !== '') {
+      _this.birthday = birth
     }
   },
   methods: {
